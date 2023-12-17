@@ -1,15 +1,13 @@
-#![cfg_attr(feature = "unstable", feature(error_generic_member_access))]
-
 use std::{backtrace::Backtrace, io::Write};
 
-use btparse::Frame;
+use btparse_stable::Frame;
 use colored::Colorize;
 use regex::Regex;
 
 #[derive(thiserror::Error, Debug)]
 pub enum Error {
     #[error(transparent)]
-    BacktraceParsing(#[from] btparse::Error),
+    BacktraceParsing(#[from] btparse_stable::Error),
 
     #[error(transparent)]
     IO(#[from] std::io::Error),
@@ -28,7 +26,7 @@ pub fn filter(
     name_blocklist: &[Regex],
     file_blocklist: &[Regex],
 ) -> Result<Vec<Frame>> {
-    let bt_parsed = btparse::deserialize(bt)?;
+    let bt_parsed = btparse_stable::deserialize(bt)?;
     Ok(bt_parsed
         .frames
         .into_iter()

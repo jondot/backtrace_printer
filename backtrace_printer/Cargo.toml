@@ -14,8 +14,9 @@ readme = "../README.md"
 [features]
 default = []
 
+
 [dependencies]
-btparse = { git = "https://github.com/jondot/btparse.git" }
+btparse-stable = "0.1.1"
 regex = "1"
 thiserror = "1"
 colored = "2"
