@@ -47,6 +47,7 @@ pub fn filter(
         .collect::<Vec<_>>())
 }
 
+#[cfg(feature = "unstable")]
 /// Print a backtrace given an error.
 ///
 /// # Errors
