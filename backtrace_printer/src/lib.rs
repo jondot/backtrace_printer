@@ -66,6 +66,9 @@ pub fn print_err<W: Write>(
 }
 
 /// Print frames that were extracted and parsed from an `std::backtrace::Backtrace`
+///
+/// # Errors
+/// Returns error if IO fails
 pub fn print_frames<W: Write>(writer: &mut W, frames: &Vec<Frame>) -> Result<()> {
     for frame in frames {
         writeln!(

@@ -12,11 +12,10 @@ license = "Apache-2.0"
 readme = "../README.md"
 
 [dependencies]
-btparse = "*"
-regex = "*"
+btparse = "0.1.1"
+regex = "1"
 thiserror = "1"
-backtrace = "*"
-colored = "*"
+colored = "2"
 
 [dev-dependencies]
 insta = { version = "1.17.1", features = ["redactions", "yaml"] }
