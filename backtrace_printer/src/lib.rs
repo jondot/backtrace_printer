@@ -47,25 +47,6 @@ pub fn filter(
         .collect::<Vec<_>>())
 }
 
-#[cfg(feature = "unstable")]
-/// Print a backtrace given an error.
-///
-/// # Errors
-///
-/// This function will return an error if backtrace extraction fails
-pub fn print_err<W: Write>(
-    writer: &mut W,
-    err: impl std::error::Error,
-    name_blocklist: &[Regex],
-    file_blocklist: &[Regex],
-) -> Result<()> {
-    if let Some(bt) = std::error::request_ref::<std::backtrace::Backtrace>(&err) {
-        let frames = filter(bt, name_blocklist, file_blocklist)?;
-        print_frames(writer, &frames)?;
-    }
-    Ok(())
-}
-
 /// Print a backtrace
 ///
 /// # Errors
@@ -99,35 +80,4 @@ pub fn print_frames<W: Write>(writer: &mut W, frames: &Vec<Frame>) -> Result<()>
         writeln!(writer, "\t{}\n", frame.function.yellow(),)?;
     }
     Ok(())
-}
-
-#[cfg(test)]
-mod tests {
-    use std::backtrace::Backtrace;
-    use std::fs::File;
-    use std::io::{self, BufWriter};
-
-    use super::*;
-
-    #[derive(thiserror::Error, Debug)]
-    pub enum Error {
-        #[error("back")]
-        Io(#[from] io::Error, Backtrace),
-    }
-
-    #[test]
-    pub fn test_write() {
-        std::env::set_var("RUST_BACKTRACE", "1");
-        let mut buf = BufWriter::new(Vec::new());
-
-        let err: Error = File::open("does not exist").unwrap_err().into();
-        print_err(&mut buf, err, &[], &[]).unwrap();
-        // Do writing here.
-
-        let bytes = buf.into_inner().unwrap();
-        let string = String::from_utf8_lossy(bytes.as_slice());
-        let replacer = Regex::new("/rustc/.*?/").unwrap();
-        let out = replacer.replace_all(&string, "");
-        insta::assert_display_snapshot!(out);
-    }
 }

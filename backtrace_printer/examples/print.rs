@@ -1,15 +1,19 @@
-#![feature(error_generic_member_access)]
-use std::{backtrace::Backtrace, fs::File, io};
+use std::{
+    backtrace::{self, Backtrace},
+    env,
+};
 
-use backtrace_printer::print_err;
+use backtrace_printer::print_backtrace;
 
-#[derive(thiserror::Error, Debug)]
-pub enum Error {
-    #[error("back")]
-    Io(#[from] io::Error, Backtrace),
+fn bar() -> Backtrace {
+    backtrace::Backtrace::capture()
+}
+fn foo() -> Backtrace {
+    bar()
 }
 
 pub fn main() {
-    let err: Error = File::open("does not exist").unwrap_err().into();
-    print_err(&mut std::io::stdout(), err, &[], &[]).unwrap();
+    env::set_var("RUST_BACKTRACE", "1");
+    let bt = foo();
+    print_backtrace(&mut std::io::stdout(), &bt, &[], &[]).unwrap();
 }
