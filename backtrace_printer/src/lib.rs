@@ -1,6 +1,6 @@
-#![feature(error_generic_member_access)]
+#![cfg_attr(feature = "unstable", feature(error_generic_member_access))]
 
-use std::io::Write;
+use std::{backtrace::Backtrace, io::Write};
 
 use btparse::Frame;
 use colored::Colorize;
@@ -58,13 +58,28 @@ pub fn print_err<W: Write>(
     name_blocklist: &[Regex],
     file_blocklist: &[Regex],
 ) -> Result<()> {
-    if let Some(bt) = backtrace(&err) {
+    if let Some(bt) = std::error::request_ref::<std::backtrace::Backtrace>(&err) {
         let frames = filter(bt, name_blocklist, file_blocklist)?;
         print_frames(writer, &frames)?;
     }
     Ok(())
 }
 
+/// Print a backtrace
+///
+/// # Errors
+///
+/// This function will return an error if backtrace extraction fails
+pub fn print_backtrace<W: Write>(
+    writer: &mut W,
+    bt: &Backtrace,
+    name_blocklist: &[Regex],
+    file_blocklist: &[Regex],
+) -> Result<()> {
+    let frames = filter(bt, name_blocklist, file_blocklist)?;
+    print_frames(writer, &frames)?;
+    Ok(())
+}
 /// Print frames that were extracted and parsed from an `std::backtrace::Backtrace`
 ///
 /// # Errors
@@ -83,12 +98,6 @@ pub fn print_frames<W: Write>(writer: &mut W, frames: &Vec<Frame>) -> Result<()>
         writeln!(writer, "\t{}\n", frame.function.yellow(),)?;
     }
     Ok(())
-}
-
-/// Extract a stacktrace from an error. Uses unstable features to extract
-/// because apparently, there's no clear approved API for this (yet)
-pub fn backtrace(err: &impl std::error::Error) -> Option<&std::backtrace::Backtrace> {
-    std::error::request_ref::<std::backtrace::Backtrace>(err)
 }
 
 #[cfg(test)]

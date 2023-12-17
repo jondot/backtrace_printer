@@ -1,6 +1,6 @@
 [package]
 name = "backtrace_printer"
-version = "1.0.0"
+version = "1.1.0"
 edition = "2021"
 
 description = "print std::backtrace::Backtrace with filtering and more"
@@ -10,6 +10,10 @@ repository = "https://github.com/jondot/backtrace_printer"
 keywords = ["dev", "backtrace", "console"]
 license = "Apache-2.0"
 readme = "../README.md"
+
+[features]
+default = ["unstable"]
+unstable = []
 
 [dependencies]
 btparse = "0.1.1"
