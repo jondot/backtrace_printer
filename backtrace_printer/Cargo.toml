@@ -1,0 +1,23 @@
+[package]
+name = "backtrace_printer"
+version = "1.0.0"
+edition = "2021"
+
+description = "print std::backtrace::Backtrace with filtering and more"
+authors = ["dotan@rng0.io"]
+documentation = "https://docs.rs/backtrace_printer"
+repository = "https://github.com/jondot/backtrace_printer"
+keywords = ["dev", "backtrace", "console"]
+license = "Apache-2.0"
+readme = "../README.md"
+
+[dependencies]
+btparse = "*"
+regex = "*"
+thiserror = "1"
+backtrace = "*"
+colored = "*"
+
+[dev-dependencies]
+insta = { version = "1.17.1", features = ["redactions", "yaml"] }
+pretty_assertions = "1"

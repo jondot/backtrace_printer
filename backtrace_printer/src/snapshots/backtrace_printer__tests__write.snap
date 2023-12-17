@@ -1,0 +1,95 @@
+---
+source: backtrace_printer/src/lib.rs
+expression: out
+---
+library/std/src/../../backtrace/src/backtrace/libunwind.rs:104
+	[33mstd::backtrace_rs::backtrace::libunwind::trace[0m
+
+library/std/src/../../backtrace/src/backtrace/mod.rs:66
+	[33mstd::backtrace_rs::backtrace::trace_unsynchronized[0m
+
+library/std/src/backtrace.rs:331
+	[33mstd::backtrace::Backtrace::create[0m
+
+./src/lib.rs:99
+	[33m<backtrace_printer::tests::Error as core::convert::From<std::io::error::Error>>::from[0m
+
+library/core/src/convert/mod.rs:757
+	[33m<T as core::convert::Into<U>>::into[0m
+
+./src/lib.rs:110
+	[33mbacktrace_printer::tests::test_write[0m
+
+./src/lib.rs:106
+	[33mbacktrace_printer::tests::test_write::{{closure}}[0m
+
+library/core/src/ops/function.rs:250
+	[33mcore::ops::function::FnOnce::call_once[0m
+
+library/core/src/ops/function.rs:250
+	[33mcore::ops::function::FnOnce::call_once[0m
+
+library/test/src/lib.rs:628
+	[33mtest::__rust_begin_short_backtrace[0m
+
+library/test/src/lib.rs:651
+	[33mtest::run_test_in_process::{{closure}}[0m
+
+library/core/src/panic/unwind_safe.rs:272
+	[33m<core::panic::unwind_safe::AssertUnwindSafe<F> as core::ops::function::FnOnce<()>>::call_once[0m
+
+library/std/src/panicking.rs:552
+	[33mstd::panicking::try::do_call[0m
+
+library/std/src/panicking.rs:516
+	[33mstd::panicking::try[0m
+
+library/std/src/panic.rs:142
+	[33mstd::panic::catch_unwind[0m
+
+library/test/src/lib.rs:651
+	[33mtest::run_test_in_process[0m
+
+library/test/src/lib.rs:574
+	[33mtest::run_test::{{closure}}[0m
+
+library/test/src/lib.rs:602
+	[33mtest::run_test::{{closure}}[0m
+
+library/std/src/sys_common/backtrace.rs:154
+	[33mstd::sys_common::backtrace::__rust_begin_short_backtrace[0m
+
+library/std/src/thread/mod.rs:529
+	[33mstd::thread::Builder::spawn_unchecked_::{{closure}}::{{closure}}[0m
+
+library/core/src/panic/unwind_safe.rs:272
+	[33m<core::panic::unwind_safe::AssertUnwindSafe<F> as core::ops::function::FnOnce<()>>::call_once[0m
+
+library/std/src/panicking.rs:552
+	[33mstd::panicking::try::do_call[0m
+
+library/std/src/panicking.rs:516
+	[33mstd::panicking::try[0m
+
+library/std/src/panic.rs:142
+	[33mstd::panic::catch_unwind[0m
+
+library/std/src/thread/mod.rs:528
+	[33mstd::thread::Builder::spawn_unchecked_::{{closure}}[0m
+
+library/core/src/ops/function.rs:250
+	[33mcore::ops::function::FnOnce::call_once{{vtable.shim}}[0m
+
+library/alloc/src/boxed.rs:2007
+	[33m<alloc::boxed::Box<F,A> as core::ops::function::FnOnce<Args>>::call_once[0m
+
+library/alloc/src/boxed.rs:2007
+	[33m<alloc::boxed::Box<F,A> as core::ops::function::FnOnce<Args>>::call_once[0m
+
+library/std/src/sys/unix/thread.rs:108
+	[33mstd::sys::unix::thread::Thread::new::thread_start[0m
+
+<no file>
+	[33m__pthread_joiner_wake[0m
+
+
